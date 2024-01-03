@@ -1,0 +1,59 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        // install packages
+        {
+            "label": "nuget: restore",
+            "type": "shell",
+            "command": "dotnet restore --nologo --configfile Nuget.config",
+            "problemMatcher": "$msCompile"
+        },
+        // build solution
+        {
+            "label": "dotnet: build (debug)",
+            "type": "shell",
+            "command": "dotnet build --nologo --no-restore --configuration Debug",
+            "problemMatcher": "$msCompile",
+            "dependsOn": [ "dotnet: tool restore", "nuget: restore" ],
+            "group": "build"
+        },
+        {
+            "label": "dotnet: build (release)",
+            "type": "shell",
+            "command": "dotnet build --nologo --no-restore --configuration Release",
+            "problemMatcher": "$msCompile",
+            "dependsOn": [ "dotnet: tool restore", "nuget: restore" ],
+            "group": "build"
+        },
+        // test solution
+        {
+            "label": "dotnet: test",
+            "type": "shell",
+            "command": "dotnet test --nologo --no-restore --no-build --results-directory:.coverage/results --collect:'XPlat Code Coverage'",
+            "problemMatcher": [],
+            "dependsOn": [ "dotnet: build (debug)" ],
+            "group": "test"
+        },
+        // report coverage
+        {
+            "label": "report coverage: html",
+            "type": "shell",
+            "command": "dotnet .nuget/packages/reportgenerator/5.2.0/tools/net8.0/ReportGenerator.dll -reports:.coverage/**/coverage.cobertura.xml -targetdir:.coverage/html -reporttypes:Html",
+            "problemMatcher": [],
+            "dependsOn": [ "dotnet: test" ],
+            "group": {
+                "kind": "test"
+            }
+        },
+        {
+            "label": "report coverage: cobertura",
+            "type": "shell",
+            "command": "dotnet .nuget/packages/reportgenerator/5.2.0/tools/net8.0/ReportGenerator.dll -reports:.coverage/**/coverage.cobertura.xml -targetdir:.coverage -reporttypes:Cobertura",
+            "problemMatcher": [],
+            "dependsOn": [ "dotnet: test" ],
+            "group": {
+                "kind": "test"
+            }
+        }
+    ]
+}

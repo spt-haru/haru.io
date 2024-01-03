@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>6.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Haru.IO</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Merijn Hendriks</Authors>
+    <Company>Project Haru</Company>
+    <PackageDescription>Wrapper for C#'s file system.</PackageDescription>
+    <RepositoryUrl>https://github.com/spt-haru/haru.io</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Haru.Pools" HintPath="..\references\haru\Haru.Pools.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+  </ItemGroup>
+
+</Project>
